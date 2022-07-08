@@ -22,7 +22,7 @@ public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
             new IdentityRole
             {
                 Name = "SuperAdmin",
-                NormalizedName = "SuperAdmin"
+                NormalizedName = "SUPERADMIN"
             }
             );
     }

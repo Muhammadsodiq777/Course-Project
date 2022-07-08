@@ -1,32 +1,35 @@
-﻿using Course_Project.Configurations;
+﻿
+using Course_Project.Configurations;
+using Course_Project.Data;
 using Course_Project.IRepository;
 
-namespace Course_Project.IRepository;
-
-public class UnitOfWork : IUnitOfWork
+namespace Course_Project.Repository
 {
-    public readonly DatabaseDBConfig _context;
-
-    private GenericRepository<Country> _countries;
-
-    private GenericRepository<Hotel> _hotels;
-
-    public UnitOfWork(DatabaseDBConfig context)
+    public class UnitOfWork : IUnitOfWork
     {
-        _context = context;
-    }
+        public readonly DatabaseContext _context;
 
-    public GenericRepository<Country> Countries => _countries ??= new GenericRepository<Country>(_context);
-    public GenericRepository<Hotel> Hotels => _hotels ??= new GenericRepository<Hotel>(_context);
+        private GenericRepository<ApiUser> _user;
 
-    public void Dispose()
-    {
-        _context.Dispose();
-        GC.SuppressFinalize(this);
-    }
+        //private GenericRepository<Hotel> _hotels;
 
-    public async Task SaveAsync()
-    {
-        await _context.SaveChangesAsync(); 
+        public UnitOfWork(DatabaseContext context)
+        {
+            _context = context;
+        }
+
+        public GenericRepository<ApiUser> Users => _user ??= new GenericRepository<ApiUser>(_context);
+        //public GenericRepository<Hotel> Hotels => _hotels ??= new GenericRepository<Hotel>(_context);
+
+        public void Dispose()
+        {
+            _context.Dispose();
+            GC.SuppressFinalize(this);
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync(); 
+        }
     }
 }

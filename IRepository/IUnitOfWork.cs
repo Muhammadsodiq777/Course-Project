@@ -1,13 +1,12 @@
-﻿using HotelListing.Data;
-using HotelListing.Repository;
+﻿using Course_Project.Data;
+using Course_Project.Repository;
 
-namespace Course_Project.IRepository;
+namespace Course_Project.IRepository
 {
     public interface IUnitOfWork: IDisposable
     {
-        GenericRepository<Country> Countries { get; }
-        GenericRepository<Hotel> Hotels { get; }
-
+        GenericRepository<ApiUser> Users { get; }
+        /*GenericRepository<Hotel> Hotels { get; }*/
         Task SaveAsync();
 
     }

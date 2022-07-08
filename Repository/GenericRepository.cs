@@ -5,20 +5,20 @@ using Course_Project.Models;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 
-namespace HotelListing.Repository
+namespace Course_Project.Repository
 {
     public class GenericRepository<T> : IGenericRpository<T> where T : class
     {
-        public readonly DatabaseDBConfig _context;
+        public readonly DatabaseContext _context;
         public readonly DbSet<T> _db;
 
-        public GenericRepository(DatabaseDBConfig context)
+        public GenericRepository(DatabaseContext context)
         {
             _context = context;
             _db = _context.Set<T>(); 
         }
 
-        public async Task Delete(long id)
+        public async Task Delete<U>(U id)
         {
             var entity = await _db.FindAsync(id);
             _db.Remove(entity);
