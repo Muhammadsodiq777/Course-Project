@@ -73,7 +73,7 @@ namespace Course_Project.Service
         public async Task<bool> ValidateUser(LoginUserDTO userDTO)
         { 
             _user = await _userManager.FindByNameAsync(userDTO.Email);
-            return (_user != null && await _userManager.CheckPasswordAsync(_user, userDTO.Password));
+            return (_user != null && await _userManager.CheckPasswordAsync(_user, userDTO.PasswordHash));
         }
     }
 }

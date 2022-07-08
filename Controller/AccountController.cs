@@ -3,7 +3,6 @@ using Course_Project.Data;
 using Course_Project.IRepository;
 using Course_Project.Models;
 using Course_Project.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,9 +43,9 @@ namespace HotelListing.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = _mapper.Map<ApiUser>(userDTO);
+            var user =  _mapper.Map<ApiUser>(userDTO);
             user.UserName = userDTO.Email;
-            var result = await _userManager.CreateAsync(user, userDTO.Password);
+            var result = await _userManager.CreateAsync(user, userDTO.PasswordHash);
 
             if (!result.Succeeded)
             {
@@ -98,6 +97,17 @@ namespace HotelListing.Controllers
             await _unitOfWork.SaveAsync();
 
             return NoContent();
+        }
+
+        [HttpGet]
+        [ResponseCache(CacheProfileName = "SecondsDuration")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllUsers([FromQuery] RequestParams requestParams)
+        {
+            var users = await _unitOfWork.Users.GetAllPaged(requestParams);
+            var results = _mapper.Map<IList<UserDTO>>(users);
+            return Ok(results);
         }
     }
 }

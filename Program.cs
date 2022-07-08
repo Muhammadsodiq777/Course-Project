@@ -13,14 +13,6 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 var Configuration = builder.Configuration;
 
-// Add services to the container
-/*
-builder.Host.UseSerilog((ctx, lc) => lc
-    .WriteTo.File(path: "D:\\4.CSharp\\log-.txt")
-    .ToString());
-*/
-
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
